@@ -18,7 +18,7 @@
 #include "Mystring.h"
 
 // comment out to use string class, now use Mystring class
-#define string Mystring
+//#define string Mystring
 
 using namespace std;
 
@@ -82,7 +82,7 @@ int main()
     check_obj(s3, "s3");
     
     
-   /* cout << "---Testing append ---\n";
+    /*cout << "---Testing append ---\n";
     s3.append("CSCE2014", 4);
     check_obj(s3, "s3");*/
     

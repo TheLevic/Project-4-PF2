@@ -108,19 +108,31 @@ void Mystring::reserve(Mystring::size_type n){
 
 Mystring& Mystring::operator=(const Mystring& str){ //Setting one object equal to another
     if (this != &str){
-        *this = str.ptr_buffer; //Sets this == the string we are trying to copy
-        //Set both values of this = to str
-        this->len = str.len; 
-        this->buf_size = str.buf_size;
+        delete [] ptr_buffer; //Freeing ptr_buffer
+        ptr_buffer = new char [str.len + 1];
+        strcpy(ptr_buffer,str.ptr_buffer);
+        len = str.len;
+        buf_size = str.buf_size; 
     }
     return *this;
 }
 Mystring& Mystring::operator=(const char *ptr){ //Making an array of character = a string
-    //Setting the private variables
-    strcpy(this->ptr_buffer,ptr); 
     int count = 0;
-    for (int count; ptr[count] != NULL; count++);
-    this->len = count + 1;
-    this->buf_size = 0;
+    for (int count = 0; ptr[count] != '\0'; count++);
+    len = count + 1;
+    buf_size = 0;
+    delete [] ptr_buffer;
+    ptr_buffer = new char [len];
+    strcpy(ptr_buffer,ptr);
     return *this;
 }
+
+char Mystring::operator[](size_type pos) const{
+    return this->ptr_buffer[pos];
+}
+
+char& Mystring::operator[](size_type pos){
+    return this->ptr_buffer[pos];
+}
+
+
