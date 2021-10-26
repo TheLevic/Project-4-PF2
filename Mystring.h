@@ -55,21 +55,21 @@ public:
 
     // Assignment operator
     // the next two lines are commented out, so to use default. Uncomment to implement both later
-    Mystring& operator=(const Mystring&);
-    Mystring& operator=(const char *);
+    Mystring& operator=(const Mystring&); //Done
+    Mystring& operator=(const char *); //Done
 
     // Array notation
     char operator[](size_type pos) const;  // minor difference we use char and not const char&
-    char& operator[](size_type pos);
+    char& operator[](size_type pos); //Done?
 
     // Append
-    Mystring& operator+=(const Mystring& str);
-    Mystring& operator+=(const char * str);
+    Mystring& operator+=(const Mystring& str); //Done
+    Mystring& operator+=(const char * str); //Done
 
     //=== Methods that modify the string
 
-    void clear();
-    void push_back(char c);
+    void clear(); //Done
+    void push_back(char c); //Done
 
     // substring (2)
     Mystring& append(const Mystring& str, size_type subpos, size_type sublen);

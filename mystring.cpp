@@ -127,12 +127,43 @@ Mystring& Mystring::operator=(const char *ptr){ //Making an array of character =
     return *this;
 }
 
-char Mystring::operator[](size_type pos) const{
-    return this->ptr_buffer[pos];
+//Array Notation
+char Mystring::operator[](size_type pos) const{ //What is the difference between these two?
+   return ptr_buffer[pos];
 }
 
 char& Mystring::operator[](size_type pos){
-    return this->ptr_buffer[pos];
+   return ptr_buffer[pos];
+}
+
+//Append
+ Mystring& Mystring::operator+=(const Mystring& str){
+     len = len + str.len + 1; //Setting the new len of the string
+     buf_size = 0;
+     strcat(ptr_buffer, str.ptr_buffer); //Adding the string on to the end
+     return *this;
+ }
+
+ Mystring& Mystring::operator+=(const char * str){
+     int count = 0;
+     for (count = 0; str[count] != '\0'; count++){}
+     len = len + count + 1;
+     buf_size = 0;
+     strcat(ptr_buffer,str);
+     return *this;
+ }
+
+    //=== Methods that modify the string
+
+void Mystring::clear(){
+    delete [] ptr_buffer;
+    len = 0;
+    buf_size = 0;
+}
+void Mystring::push_back(char c){
+    len = len + 1; 
+    ptr_buffer[len] = c; //Adding the string to the end
+    buf_size = 0;
 }
 
 

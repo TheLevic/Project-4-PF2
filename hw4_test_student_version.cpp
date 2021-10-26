@@ -81,10 +81,24 @@ int main()
     s3 = s4;
     check_obj(s3, "s3");
     
+    cout << "---Teseting [] ---\n";
+    cout << "The fifth character in the string s1 is " << s1[4] << endl;
     
-    /*cout << "---Testing append ---\n";
-    s3.append("CSCE2014", 4);
+    cout << "---Testing append ---\n";
+    /*s3.append("CSCE2014", 4);
     check_obj(s3, "s3");*/
+    string s8 = "Yo ";
+    string s9 = "Hey!";
+    s8 += "Dude";
+    check_obj(s8, "s8");
+
+    cout << "---Testing Push_back ---" << endl;
+    s9.push_back('!');
+    check_obj(s9, "s9");
+
+    cout << "---Testing Clear ---" << endl;
+    s9.clear();
+    check_obj(s9, "s9");
     
     
     
