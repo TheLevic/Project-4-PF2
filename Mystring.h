@@ -72,9 +72,9 @@ public:
     void push_back(char c); //Done
 
     // substring (2)
-    Mystring& append(const Mystring& str, size_type subpos, size_type sublen);
+    Mystring& append(const Mystring& str, size_type subpos, size_type sublen); //Done
     // buffer (4)
-    Mystring& append(const char * str, size_type n);
+    Mystring& append(const char * str, size_type n); //Done
 
     // string (1)
     Mystring& insert(size_type pos, const Mystring& str);

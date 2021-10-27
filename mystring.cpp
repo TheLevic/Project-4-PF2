@@ -106,10 +106,10 @@ void Mystring::reserve(Mystring::size_type n){
     }
 }
 
-Mystring& Mystring::operator=(const Mystring& str){ //Setting one object equal to another
+Mystring& Mystring::operator=(const Mystring& str){ //Setting one object equal to another (essentially copying)
     if (this != &str){
         delete [] ptr_buffer; //Freeing ptr_buffer
-        ptr_buffer = new char [str.len + 1];
+        ptr_buffer = new char [str.len + 1]; 
         strcpy(ptr_buffer,str.ptr_buffer);
         len = str.len;
         buf_size = str.buf_size; 
@@ -117,13 +117,13 @@ Mystring& Mystring::operator=(const Mystring& str){ //Setting one object equal t
     return *this;
 }
 Mystring& Mystring::operator=(const char *ptr){ //Making an array of character = a string
-    int count = 0;
-    for (int count = 0; ptr[count] != '\0'; count++);
-    len = count + 1;
-    buf_size = 0;
-    delete [] ptr_buffer;
-    ptr_buffer = new char [len];
-    strcpy(ptr_buffer,ptr);
+    delete [] ptr_buffer; //Freeing space
+    int count; //Length
+    for (count = 0; ptr[count] != '\0'; count++);
+    len = count;
+    buf_size = count + 1; //Including null char
+    ptr_buffer = new char [buf_size]; //With proper space allocation
+    strcpy(ptr_buffer,ptr); //Copying string over
     return *this;
 }
 
@@ -138,32 +138,81 @@ char& Mystring::operator[](size_type pos){
 
 //Append
  Mystring& Mystring::operator+=(const Mystring& str){
-     len = len + str.len + 1; //Setting the new len of the string
-     buf_size = 0;
-     strcat(ptr_buffer, str.ptr_buffer); //Adding the string on to the end
+     len = len + str.len; //Setting the new len of the string
+     buf_size = len + 1 ;
+     char *tmp = new char [buf_size]; //Creating tmp to hold ptr_buffer and add the new str to the end of it
+     strcpy(tmp, ptr_buffer);
+     strcat(tmp, str.ptr_buffer);
+     ptr_buffer = new char [buf_size];
+     strcpy(ptr_buffer,tmp); //Putting concatenated version back into ptr_buffer
      return *this;
  }
 
  Mystring& Mystring::operator+=(const char * str){
-     int count = 0;
+     int count = 0; //My len of the str we're adding
      for (count = 0; str[count] != '\0'; count++){}
-     len = len + count + 1;
-     buf_size = 0;
-     strcat(ptr_buffer,str);
+     len = len + count;
+     buf_size = len + 1; //Length including null character
+     char *tmp = new char [buf_size]; //Tmp to hold ptr_buffer
+     strcpy(tmp, ptr_buffer);
+     delete [] ptr_buffer;
+     ptr_buffer = new char [buf_size]; //Adding space
+     strcat(ptr_buffer,str); //Copying back to ptr_buffer
      return *this;
  }
 
     //=== Methods that modify the string
 
 void Mystring::clear(){
-    delete [] ptr_buffer;
-    len = 0;
-    buf_size = 0;
+    delete [] ptr_buffer; //Freeing ptr_buffers space
+    len = 0; //Setting len = 0
+    buf_size = 1; //Buf size = 1 b/c NULL
+    ptr_buffer = new char [len + 1];
+    ptr_buffer[0] = '\0';
 }
 void Mystring::push_back(char c){
-    len = len + 1; 
-    ptr_buffer[len] = c; //Adding the string to the end
-    buf_size = 0;
+    char *tmp = new char [len + 2];
+    strcpy(tmp,ptr_buffer);
+    delete [] ptr_buffer;
+    len = len + 1; //Adding space for the new char
+    buf_size = len + 1; //Adding space for the NULL character
+    ptr_buffer = new char [buf_size];
+    cout << len;
+    tmp[len - 1] = c; //Adding the character to the end of the string
+    strcpy(ptr_buffer,tmp);
 }
 
+Mystring& Mystring::append(const Mystring& str, size_type subpos, size_type sublen){
+    //Need to append a substr of str from subpos to sublen
+    size_type size = (sublen - subpos) + 1;
+    char *tmp = new char [size + len + 1]; //tmp variable to hold ptr_buffer and strcat tmp2 to
+    char *tmp2 = new char [size]; //tmp variable to hold the substring that I need to append
+    strcpy(tmp,ptr_buffer);
+    delete [] ptr_buffer;
+    ptr_buffer = new char [len + size + 1];
+    len = len + size;
+    buf_size = len + 1; //Len of str + null char
+    for (int i = subpos; i <= sublen; i++){ //Creating the substring tmp2 from str
+        tmp2[i - subpos] = str[i]; 
+    }
+    strcat(tmp, tmp2);
+    strcpy(ptr_buffer,tmp);
+    return *this;
+}
+
+Mystring& Mystring::append(const char * str, size_type n){
+    buf_size = buf_size + n; //Increasing the buf size
+    char *tmp = new char [buf_size]; //Holding the ptr_buffer and what we're adding
+    strcpy(tmp, ptr_buffer); //Copying ptr_buffer to tmp
+    delete [] ptr_buffer; //Freeing ptr_buffer
+    char *tmp2 = new char [n + 1]; //Array of char to hold the str being appended
+    for (int i = 0; i < n; i ++){
+        tmp2[i] = str[i]; //Going char by char
+    }
+    strcat(tmp, tmp2); //Adding tmp2 onto tmp
+    ptr_buffer = new char [buf_size]; //Allocating ptr_buffer with the right amount of memory
+    strcpy(ptr_buffer,tmp);
+    len = buf_size - 1; 
+    return *this;
+}
 

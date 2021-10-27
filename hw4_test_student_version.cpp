@@ -18,7 +18,7 @@
 #include "Mystring.h"
 
 // comment out to use string class, now use Mystring class
-//#define string Mystring
+#define string Mystring
 
 using namespace std;
 
@@ -81,24 +81,28 @@ int main()
     s3 = s4;
     check_obj(s3, "s3");
     
-    cout << "---Teseting [] ---\n";
+    cout << "---Testing [] ---\n";
     cout << "The fifth character in the string s1 is " << s1[4] << endl;
     
     cout << "---Testing append ---\n";
-    /*s3.append("CSCE2014", 4);
-    check_obj(s3, "s3");*/
-    string s8 = "Yo ";
-    string s9 = "Hey!";
-    s8 += "Dude";
-    check_obj(s8, "s8");
+    //s3.append("CSCE2014", 4);
+    //check_obj(s3, "s3");
+    string something = "hey";
+    string hello = "hello";
+    something.append(hello, 1, 2);
+    check_obj(something, "something");
+    string something1 = "No";
+    something1.append("yes", 2);
+    check_obj(something1, "yes");
 
     cout << "---Testing Push_back ---" << endl;
-    s9.push_back('!');
-    check_obj(s9, "s9");
+    something = "Goodbye";
+    something.push_back('!');
+    check_obj(something, "something");
 
     cout << "---Testing Clear ---" << endl;
-    s9.clear();
-    check_obj(s9, "s9");
+    s1.clear();
+    check_obj(s1, "s1");
     
     
     
