@@ -104,7 +104,11 @@ int main()
     s1.clear();
     check_obj(s1, "s1");
     
-    
+    cout << "---Testing Insert ---" << endl;
+    s1 = "Hello";
+    string insert = " Friend";
+    s1.insert(6,insert);
+    check_obj(s1, "s1");
     
     
     return 0;

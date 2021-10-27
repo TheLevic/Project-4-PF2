@@ -1,6 +1,6 @@
 /*
  * File:   mystring.cpp
- * Author: wingning
+ * Author: Levi Crider
  *
  * mystring class implementation:
  * methods whose implementations are provided:
@@ -212,7 +212,31 @@ Mystring& Mystring::append(const char * str, size_type n){
     strcat(tmp, tmp2); //Adding tmp2 onto tmp
     ptr_buffer = new char [buf_size]; //Allocating ptr_buffer with the right amount of memory
     strcpy(ptr_buffer,tmp);
+    delete [] tmp;
     len = buf_size - 1; 
+    return *this;
+}
+
+//Inserts additional characters into the string right before the character indicated by pos (or p):
+
+Mystring& Mystring::insert(size_type pos, const Mystring& str){
+    char *tmp = new char [buf_size + str.len];
+    strcpy(tmp,ptr_buffer);
+    /*Insert str while keeping the ptr_buffer string in tact before and after 
+    (Need to free the space in the middle for the inserted str)*/
+    for (int i = buf_size + str.len - 1; i > pos; i--){
+        tmp [i] = ptr_buffer[i-str.len]; //Moves the characters to the end that need to go after the inserted str
+    }
+    for(int i = pos; tmp[i] != ptr_buffer[buf_size - pos]; i++){ //Inserts the char in the free space
+        tmp[i] = str[i - pos];
+    }
+    //Copy back to ptr_buffer
+    delete [] ptr_buffer;
+    ptr_buffer = new char [buf_size + str.len];
+    strcpy(ptr_buffer,tmp);
+    //Set proper buf_size and len
+    buf_size = buf_size + str.len;
+    len = buf_size - 1;
     return *this;
 }
 
