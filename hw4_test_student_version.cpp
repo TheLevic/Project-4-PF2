@@ -149,6 +149,7 @@ int main()
     s1 = s2;
     t_or_f = s1 == s2;
     cout << t_or_f << endl;
+    cout << s1.empty();
 
 
 

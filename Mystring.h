@@ -96,7 +96,7 @@ public:
     size_type find_first_of (const char* s, size_type pos, size_type n) const; //Done
 
     // c-string (2)
-    size_type find_last_not_of (const char* s, size_type pos = npos) const; 
+    size_type find_last_not_of (const char* s, size_type pos = npos) const; //Done
 
 
 private:
@@ -126,7 +126,7 @@ bool operator!=(const char *, const Mystring&); //Done
 bool operator!=(const Mystring&, const char *); //Done
 
 // Overload operator + for string as concatenation
-Mystring operator+(const Mystring&, const Mystring&);
+Mystring operator+(const Mystring&, const Mystring&); //Done
 
 // Output
 ostream& operator<<(ostream& out, const Mystring& str); // code given to you in lab6 Mystring.cpp

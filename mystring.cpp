@@ -142,6 +142,15 @@ bool operator!=(const Mystring& s, const char *p){
     }
 }
 
+bool Mystring::empty() const{
+    if (len == 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 Mystring operator+(const Mystring& s, const Mystring& p){
     Mystring something;
     something += s;
