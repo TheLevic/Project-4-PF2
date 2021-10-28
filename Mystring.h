@@ -77,14 +77,14 @@ public:
     Mystring& append(const char * str, size_type n); //Done
 
     // string (1)
-    Mystring& insert(size_type pos, const Mystring& str);
+    Mystring& insert(size_type pos, const Mystring& str);//Done
     // c-string (3)
-    Mystring& insert(size_type pos, const char * str);
+    Mystring& insert(size_type pos, const char * str); //Done
 
     // string (1)
-    Mystring& replace(size_type start, size_type span, const Mystring& str);
+    Mystring& replace(size_type start, size_type span, const Mystring& str); //Done
     // c-string (3)
-    Mystring& replace(size_type start, size_type span, const char * str);
+    Mystring& replace(size_type start, size_type span, const char * str); //Done
 
     //=== Conversion to c-string
 

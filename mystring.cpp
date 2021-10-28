@@ -177,8 +177,8 @@ void Mystring::push_back(char c){
     len = len + 1; //Adding space for the new char
     buf_size = len + 1; //Adding space for the NULL character
     ptr_buffer = new char [buf_size];
-    cout << len;
     tmp[len - 1] = c; //Adding the character to the end of the string
+    tmp[len] = '\0';
     strcpy(ptr_buffer,tmp);
 }
 
@@ -220,23 +220,132 @@ Mystring& Mystring::append(const char * str, size_type n){
 //Inserts additional characters into the string right before the character indicated by pos (or p):
 
 Mystring& Mystring::insert(size_type pos, const Mystring& str){
-    char *tmp = new char [buf_size + str.len];
-    strcpy(tmp,ptr_buffer);
-    /*Insert str while keeping the ptr_buffer string in tact before and after 
-    (Need to free the space in the middle for the inserted str)*/
-    for (int i = buf_size + str.len - 1; i > pos; i--){
-        tmp [i] = ptr_buffer[i-str.len]; //Moves the characters to the end that need to go after the inserted str
+    char *tmp = new char [buf_size + str.len]; //Tmp array to hold original str and insert str into
+    char *tmp2 = new char [buf_size]; //tmp array to hold the chars that will be appended
+    strcpy(tmp, ptr_buffer);
+    for (int i = pos; i < len; i++){ //Copying the values that will need to be appended to the end
+        tmp2[i-pos] = tmp[i];
     }
-    for(int i = pos; tmp[i] != ptr_buffer[buf_size - pos]; i++){ //Inserts the char in the free space
-        tmp[i] = str[i - pos];
+    for (int i = pos; i - pos < str.len; i++){ 
+        tmp[i] = str[i-pos];//Inserting str at pos, before should still be the same
     }
-    //Copy back to ptr_buffer
-    delete [] ptr_buffer;
-    ptr_buffer = new char [buf_size + str.len];
+    for (int i = pos+str.len; i < buf_size + str.len; i++){ //Adding the end chars
+        tmp[i] = tmp2[i - (pos + str.len)];
+    }
+    delete [] ptr_buffer; //Freeing ptr_buffer
+    ptr_buffer = new char [buf_size + str.len]; //Giving ptr_buffer enough space
+    tmp[buf_size + str.len] = '\0'; //Setting the last char = null
     strcpy(ptr_buffer,tmp);
-    //Set proper buf_size and len
-    buf_size = buf_size + str.len;
-    len = buf_size - 1;
+    //memcpy(ptr_buffer,tmp,buf_size + str.len); //Copying tmp back to ptr_buffer
+    delete [] tmp; //Freeing tmp
+    buf_size = buf_size + str.len; //Setting proper buf_size
+    len = buf_size - 1; //Str_size will be one less than buf_size always in this case
     return *this;
 }
 
+Mystring& Mystring::insert(size_type pos, const char * str){
+    int str_len = 0; //Length of str
+    for (str_len = 0; str[str_len] != '\0'; str_len++){}
+    char *tmp = new char [buf_size + str_len]; //tmp variable that we will be modifying
+    char *tmp2 = new char [buf_size]; //tmp variable to hold what we will need to append
+    strcpy(tmp, ptr_buffer);
+    for (int i = pos; i < len; i++){
+        tmp2[i-pos] = tmp [i];
+    }
+    for (int i = pos; i - pos < str_len; i++){
+        tmp[i] = str[i-pos];
+    }
+    for (int i = pos+str_len; i < buf_size + str_len; i++){ //Adding the end chars
+        tmp[i] = tmp2[i - (pos + str_len)];
+    }
+    delete [] ptr_buffer; //Freeing ptr_buffer
+    ptr_buffer = new char [buf_size + str_len]; //Giving ptr_buffer enough space
+    tmp[buf_size + str_len] = '\0'; //Setting the last char = null
+    strcpy(ptr_buffer,tmp);
+    //memcpy(ptr_buffer,tmp,buf_size + str.len); //Copying tmp back to ptr_buffer
+    delete [] tmp; //Freeing tmp
+    buf_size = buf_size + str_len; //Setting proper buf_size
+    len = buf_size - 1; //Str_size will be one less than buf_size always in this case
+    return *this;
+}
+
+Mystring& Mystring::replace(size_type start, size_type span, const Mystring& str){
+
+    char *tmp = new char [buf_size + str.len]; //tmp will hold our orig ptr_buffer and be modified
+    char *tmp2 = new char[buf_size]; //tmp2 will hold what we are keeping from our orig ptr_buffer
+    strcpy(tmp, ptr_buffer);
+    for (int i = start + span; tmp[i] != '\0'; i++){ //Get's the variables that we are saving 
+        tmp2[i - (start + span)] = tmp[i]; //tmp2 is set
+    }
+    //Now I need to replace with str
+    for (int i = start; i < start + str.len; i++){
+        tmp[i] = str[i-start];
+    }
+    //Adding tmp2 to the end
+    for (int i = start + str.len; i < buf_size + str.len; i++){
+        tmp[i] = tmp2[i - (start + str.len)];
+    }
+    delete [] ptr_buffer;
+    ptr_buffer = new char [buf_size + str.len];
+    strcpy(ptr_buffer,tmp);
+    buf_size = 0;
+    for (int i = 0; ptr_buffer[i] != '\0'; i++){
+        buf_size++;
+    }
+    len = buf_size;
+    buf_size = buf_size + 1;
+    return *this;
+}
+
+Mystring& Mystring::replace(size_type start, size_type span, const char * str){
+    int str_len = 0;
+    for (str_len = 0; str[str_len] != '\0'; str_len++);
+    char *tmp = new char [buf_size + str_len]; //tmp will hold our orig ptr_buffer and be modified
+    char *tmp2 = new char[buf_size]; //tmp2 will hold what we are keeping from our orig ptr_buffer
+    strcpy(tmp, ptr_buffer);
+    for (int i = start + span; tmp[i] != '\0'; i++){ //Get's the variables that we are saving 
+        tmp2[i - (start + span)] = tmp[i]; //tmp2 is set
+    }
+    //Now I need to replace with str
+    for (int i = start; i < start + str_len; i++){
+        tmp[i] = str[i-start];
+    }
+    //Adding tmp2 to the end
+    for (int i = start + str_len; i < buf_size + str_len; i++){
+        tmp[i] = tmp2[i - (start + str_len)];
+    }
+    delete [] ptr_buffer;
+    ptr_buffer = new char [buf_size + str_len];
+    strcpy(ptr_buffer,tmp);
+    buf_size = 0;
+    for (int i = 0; ptr_buffer[i] != '\0'; i++){
+        buf_size++;
+    }
+    len = buf_size;
+    buf_size = buf_size + 1;
+    return *this;
+}
+
+Mystring::size_type Mystring::find_first_of (const char* s, size_type pos, size_type n) const{  
+    for (int i = pos; ptr_buffer[i] != '\0'; i++){
+        for (int j = 0; j < n; j++){
+            if (ptr_buffer[i] == s[j]){
+            return i;
+            }
+        }
+    }   
+    return -1;
+}
+
+
+Mystring::size_type Mystring::find_last_not_of (const char* s, size_type pos) const{
+    size_type holder = -1;
+    for (int i = 0; i <= pos; i++){
+        for (int j = 0; s[j] != '\0'; j++){
+            if (ptr_buffer[i] != s[j]){
+                holder != i;
+            }
+        }
+    }
+    return holder;
+}

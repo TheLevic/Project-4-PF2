@@ -106,10 +106,38 @@ int main()
     
     cout << "---Testing Insert ---" << endl;
     s1 = "Hello";
-    string insert = " Friend";
-    s1.insert(6,insert);
+    string insert = "Friend";
+    s1.insert(4,insert);
     check_obj(s1, "s1");
-    
+    s1.insert(6, "Yo");
+    check_obj(s1, "s1");
+    s1.clear();
+
+    cout << "---Testing Replace ---" << endl;
+    s1 = "Stop ";
+    string replace = "something";
+    s1.replace(4,1,replace);
+    check_obj(s1,"s1");
+    s1.clear();
+    s1 = "Yo Dude!";
+    s1.replace(1, 3, "Sah Dude");
+    check_obj(s1, "s1");
+
+    cout << "--- Testing Find_first_of ---" << endl;
+    s1.clear();
+    s1 = "Hello Friend";
+    string search = "l";
+    int james = s1.find_first_of("l", 0, 3);
+    cout << james << endl << endl;
+
+    cout << "--- Testing find_last_not_of ---" << endl;
+    s1.clear();
+    s1 = "test string";
+    james = s1.find_last_not_of("test", 3);
+    cout << james << endl;
+
+
+
     
     return 0;
 }
