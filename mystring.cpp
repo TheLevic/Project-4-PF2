@@ -340,12 +340,17 @@ Mystring::size_type Mystring::find_first_of (const char* s, size_type pos, size_
 
 Mystring::size_type Mystring::find_last_not_of (const char* s, size_type pos) const{
     size_type holder = -1;
-    for (int i = 0; i <= pos; i++){
+    for (int i = pos; i >=0; i--){
+        bool appears = false;
         for (int j = 0; s[j] != '\0'; j++){
-            if (ptr_buffer[i] != s[j]){
-                holder != i;
+            if (ptr_buffer[i] == s[j]){
+                appears = true;
             }
         }
+        if (appears == false){
+            return i;
+        }
     }
+    
     return holder;
 }

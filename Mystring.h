@@ -93,10 +93,10 @@ public:
     //=== functionalities similar to homework 1, quizzes, exams
     
     // buffer (3) version of the overloaded method
-    size_type find_first_of (const char* s, size_type pos, size_type n) const;
+    size_type find_first_of (const char* s, size_type pos, size_type n) const; //Done
 
     // c-string (2)
-    size_type find_last_not_of (const char* s, size_type pos = npos) const;
+    size_type find_last_not_of (const char* s, size_type pos = npos) const; //Done
 
 
 private:

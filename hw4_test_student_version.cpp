@@ -133,7 +133,7 @@ int main()
     cout << "--- Testing find_last_not_of ---" << endl;
     s1.clear();
     s1 = "test string";
-    james = s1.find_last_not_of("test", 3);
+    james = s1.find_last_not_of("tes", 5);
     cout << james << endl;
 
 
