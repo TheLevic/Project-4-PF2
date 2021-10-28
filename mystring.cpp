@@ -88,6 +88,68 @@ ostream& operator<<(ostream& out, const Mystring& str)
     return out;
 }
 
+bool operator==(const Mystring& s, const Mystring& p){
+    if (strcmp(s.c_str(),p.c_str()) == 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool operator==(const char *s, const Mystring& p){
+    if (strcmp(s,p.c_str()) == 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool operator==(const Mystring& s, const char *p){
+    if (strcmp(s.c_str(),p) == 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool operator!=(const Mystring& s, const Mystring& p){
+    if (strcmp(s.c_str(),p.c_str()) != 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool operator!=(const char *s, const Mystring& p){
+    if (strcmp(s,p.c_str()) != 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool operator!=(const Mystring& s, const char *p){
+    if (strcmp(s.c_str(),p) != 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+Mystring operator+(const Mystring& s, const Mystring& p){
+    Mystring something;
+    something += s;
+    something += p;
+    return something;
+}
+
+
 // implemented for the lab to support the implementation of <<
 const char * Mystring::c_str() const 
 {

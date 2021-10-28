@@ -136,6 +136,20 @@ int main()
     james = s1.find_last_not_of("tes", 5);
     cout << james << endl;
 
+    cout << "-- Final Testing --" << endl;
+    s1.clear();
+    s1 = "Test";
+    s2.clear();
+    s2 = "hello!";
+    s3.clear();
+    s3 = s1 + s2;
+    cout << s3 << endl;
+    bool t_or_f =  s1 == s2;
+    cout << t_or_f << endl;
+    s1 = s2;
+    t_or_f = s1 == s2;
+    cout << t_or_f << endl;
+
 
 
     

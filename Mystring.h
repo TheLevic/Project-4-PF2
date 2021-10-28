@@ -96,7 +96,7 @@ public:
     size_type find_first_of (const char* s, size_type pos, size_type n) const; //Done
 
     // c-string (2)
-    size_type find_last_not_of (const char* s, size_type pos = npos) const; //Done
+    size_type find_last_not_of (const char* s, size_type pos = npos) const; 
 
 
 private:
@@ -116,14 +116,14 @@ private:
 //=== Overloading global operators for Mystring
 
 // Overload operator == for Mystring
-bool operator==(const Mystring&, const Mystring&);
-bool operator==(const char *, const Mystring&);
-bool operator==(const Mystring&, const char *);
+bool operator==(const Mystring&, const Mystring&); //Done
+bool operator==(const char *, const Mystring&); //Done
+bool operator==(const Mystring&, const char *); //Done
 
 // Overload operator != for Mystring
-bool operator!=(const Mystring&, const Mystring&);
-bool operator!=(const char *, const Mystring&);
-bool operator!=(const Mystring&, const char *);
+bool operator!=(const Mystring&, const Mystring&); //Done
+bool operator!=(const char *, const Mystring&); //Done
+bool operator!=(const Mystring&, const char *); //Done
 
 // Overload operator + for string as concatenation
 Mystring operator+(const Mystring&, const Mystring&);
